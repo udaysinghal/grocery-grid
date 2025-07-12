@@ -451,3 +451,46 @@ footer {
   border-radius: 12px;
   overflow: hidden;
 }
+
+/* Hamburger styling */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  width: 28px;
+  height: 21px;
+  justify-content: space-between;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  background: #2d6a4f;
+  border-radius: 3px;
+}
+
+/* Mobile navbar styles */
+@media (max-width: 768px) {
+  .navbar nav ul {
+    position: fixed;
+    top: 70px;
+    right: -100%;
+    background-color: #ffffff;
+    height: calc(100% - 70px);
+    width: 200px;
+    flex-direction: column;
+    padding: 30px 20px;
+    gap: 1.5rem;
+    box-shadow: -4px 0 10px rgba(0,0,0,0.1);
+    transition: right 0.3s ease;
+    z-index: 1000;
+  }
+
+  .navbar nav ul.active {
+    right: 0;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
