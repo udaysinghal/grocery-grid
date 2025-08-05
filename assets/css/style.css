@@ -501,3 +501,84 @@ footer {
     border-radius: 2px;
   }
 }
+
+
+/* css for clients */
+
+.clients {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.clients h2 {
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+
+.carousel-container {
+  position: relative;
+  max-width: 900px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+}
+
+.client {
+  flex: 0 0 calc(100% / 3); /* Default: 3 per view */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.client p {
+  font-size: 0.85em;
+  color: #444;
+  margin: 0;
+  line-height: 1.3em;
+}
+
+.client img {
+  max-width: 150px;
+  height: auto;
+  margin-bottom: 8px;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffffffcc;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 2em;
+  z-index: 10;
+}
+
+.arrow.left {
+  left: 0;
+}
+
+.arrow.right {
+  right: 0;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .client {
+    flex: 0 0 calc(100% / 2); /* 2 per view */
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .client {
+    flex: 0 0 100%; /* 1 per view */
+  }
+}
