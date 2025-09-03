@@ -47,6 +47,14 @@
         <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
+
+
+    <div class="quote-cart-container">
+        <button class="quote-cart-btn" id="quoteCartBtn">
+            🛒 My Quote
+            <span class="quote-cart-count" id="quoteCartCount">0</span>
+        </button>
+    </div>
     </header>
 
   <!-- Product Catalogue -->
@@ -141,7 +149,7 @@
       <p>Select the items you are interested in:</p>
       <ul id="modal-items-list">
         </ul>
-      <button class="cta-btn" id="getQuoteBtn">Get a Quote for Selected Items</button>
+      <button class="cta-btn" id="addToQuoteBtn">Add to Quote</button>
     </div>
   </div>
 
@@ -150,24 +158,25 @@
       <button class="modal-close">&times;</button>
       <h2>Request a Quote</h2>
       <p>Please fill out the form below. We will get back to you with a rate list shortly.</p>
-      <form class="quote-form" id="quoteForm">
+      <form action="https://formspree.io/f/mzzajlwv" method="POST" class="quote-form">
         <div class="selected-items-display">
             <strong>Selected Items:</strong>
             <p id="quote-selected-items"></p>
         </div>
         
-        <input type="hidden" name="entry.1373777526" id="hidden-selected-items">
+        <input type="hidden" name="Selected Items" id="hidden-selected-items">
         
-        <input type="text" name="entry.1731805381" placeholder="Your Name" required />
-        <input type="text" name="entry.971894433" placeholder="Restaurant Name" required />
-        <input type="email" name="entry.1908446921" placeholder="Your Email" required />
-        <input type="tel" name="entry.661871236" placeholder="Phone Number" required />
-        <textarea name="entry.244734128" placeholder="Any additional message (optional)" rows="4"></textarea>
+        <input type="text" name="Name" placeholder="Your Name" required />
+        <input type="text" name="Restaurant Name" placeholder="Restaurant Name" required />
+        <input type="email" name="Email" placeholder="Your Email" required />
+        <input type="tel" name="Phone Number" placeholder="Phone Number" required />
+        <textarea name="Message" placeholder="Any additional message (optional)" rows="4"></textarea>
         
         <button type="submit">Send Request</button>
-      </form>
+    </form>
     </div>
   </div>
+
 
   <!-- Footer -->
   <footer>

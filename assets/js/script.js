@@ -1,23 +1,59 @@
 console.log("Grocery Grid loaded ✨");
 
+// --- GLOBAL QUOTE CART ---
+// Load cart from sessionStorage on page load, or start with an empty array
+let quoteItems = JSON.parse(sessionStorage.getItem('quoteCart')) || [];
+
+// --- GLOBAL UI UPDATE FUNCTION ---
+// This function updates the cart count in the navbar. It can run on any page.
+function updateQuoteCartUI() {
+    const quoteCartCount = document.getElementById('quoteCartCount');
+    if (quoteCartCount) {
+        quoteCartCount.textContent = quoteItems.length;
+        if (quoteItems.length > 0) {
+            quoteCartCount.classList.add('visible');
+        } else {
+            quoteCartCount.classList.remove('visible');
+        }
+    }
+}
+
+// --- NAVBAR & CART REDIRECT LOGIC ---
 document.addEventListener("DOMContentLoaded", function () {
   const hamburger = document.getElementById("hamburger");
   const navMenu = document.getElementById("nav-menu");
 
-  hamburger.addEventListener("click", function () {
-    console.log("clicked ✅");
-    navMenu.classList.toggle("active");
-  });
+  if (hamburger && navMenu) {
+      hamburger.addEventListener("click", function () {
+        navMenu.classList.toggle("active");
+      });
+  }
+
+  // Update the cart UI as soon as any page loads
+  updateQuoteCartUI();
+
+  const quoteCartBtn = document.getElementById('quoteCartBtn');
+  if (quoteCartBtn) {
+      quoteCartBtn.addEventListener('click', () => {
+        if (quoteItems.length === 0) {
+            alert('Your quote cart is empty. Please add items from our product catalogue.');
+            return;
+        }
+
+        const quoteModal = document.getElementById('quoteModalOverlay');
+        if (quoteModal) {
+            quoteModal.classList.add('active');
+        } else {
+            // Redirect to products.html and tell it to open the modal
+            window.location.href = 'products.html#show-quote';
+        }
+      });
+  }
 });
 
-
-
-
-// for clients
-// First, check if the main carousel container exists on the page.
+// --- CLIENTS CAROUSEL LOGIC ---
+// This logic should be outside DOMContentLoaded to avoid issues if elements don't exist
 const carouselContainer = document.querySelector('.carousel-container');
-
-// Only run the rest of the code IF the carouselContainer was found.
 if (carouselContainer) {
   let currentIndex = 0;
   const track = document.querySelector('.carousel-track');
@@ -26,15 +62,15 @@ if (carouselContainer) {
   let totalClients = document.querySelectorAll('.client').length;
 
   function getVisibleClients() {
-    if (window.innerWidth <= 480) return 1; // Mobile
-    if (window.innerWidth <= 768) return 2; // Tablet
-    return 3; // Desktop
+    if (window.innerWidth <= 480) return 1;
+    if (window.innerWidth <= 768) return 2;
+    return 3;
   }
 
   function updateArrows() {
     const visible = getVisibleClients();
     const maxIndex = totalClients - visible;
-
+    if (!leftArrow || !rightArrow) return;
     leftArrow.style.display = currentIndex > 0 ? 'block' : 'none';
     rightArrow.style.display = currentIndex < maxIndex ? 'block' : 'none';
   }
@@ -42,32 +78,96 @@ if (carouselContainer) {
   function moveSlide(direction) {
     const visible = getVisibleClients();
     const maxIndex = totalClients - visible;
-
     currentIndex += direction;
     if (currentIndex < 0) currentIndex = 0;
     if (currentIndex > maxIndex) currentIndex = maxIndex;
-
+    if (!track) return;
     const offset = currentIndex * (100 / visible);
     track.style.transform = `translateX(-${offset}%)`;
-
     updateArrows();
   }
 
-  window.addEventListener('resize', () => {
-    moveSlide(0); // Recalculate on resize
-  });
-
-  // Initialize
+  window.addEventListener('resize', () => { moveSlide(0); });
+  if (leftArrow && rightArrow) {
+    leftArrow.addEventListener('click', () => moveSlide(-1));
+    rightArrow.addEventListener('click', () => moveSlide(1));
+  }
   updateArrows();
 }
 
-
-// ========== MODAL, SEARCH, AND FORM LOGIC ==========
+// ========== PRODUCT PAGE-ONLY LOGIC ==========
 document.addEventListener('DOMContentLoaded', () => {
+    const productCatalogue = document.querySelector('.product-catalogue');
+    if (!productCatalogue) return; // Stop if not on products page
 
-    // ========== SEARCH BAR LOGIC ==========
+    // --- ELEMENT SELECTION ---
     const searchInput = document.getElementById('productSearch');
     const productCards = document.querySelectorAll('.main-product');
+    const mainProductsContainer = document.querySelector('.main-products');
+    const productModalOverlay = document.getElementById('productModalOverlay');
+    const modalTitle = document.getElementById('modal-title');
+    const modalItemsList = document.getElementById('modal-items-list');
+    const addToQuoteBtn = document.getElementById('addToQuoteBtn');
+    const quoteModalOverlay = document.getElementById('quoteModalOverlay');
+    const quoteSelectedItems = document.getElementById('quote-selected-items');
+    const hiddenSelectedItems = document.getElementById('hidden-selected-items');
+    const allCloseButtons = document.querySelectorAll('.modal-close');
+    
+    // Also update form fields any time the cart UI is updated
+    function populateQuoteFormFields() {
+        const itemsText = quoteItems.join(', ');
+        if(quoteSelectedItems) quoteSelectedItems.textContent = itemsText;
+        if(hiddenSelectedItems) hiddenSelectedItems.value = itemsText;
+    }
+
+    mainProductsContainer.addEventListener('click', (e) => {
+        const productCard = e.target.closest('.main-product');
+        if (!productCard) return;
+        const productName = productCard.dataset.product;
+        const itemsString = productCard.dataset.items;
+        const itemsArray = itemsString.split(',');
+        modalTitle.textContent = `${productName} Varieties`;
+        modalItemsList.innerHTML = '';
+        itemsArray.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = `<label><input type="checkbox" value="${item.trim()}" name="product-item"> ${item.trim()}</label>`;
+            modalItemsList.appendChild(li);
+        });
+        productModalOverlay.classList.add('active');
+    });
+
+    addToQuoteBtn.addEventListener('click', () => {
+        const selectedCheckboxes = modalItemsList.querySelectorAll('input[type="checkbox"]:checked');
+        if (selectedCheckboxes.length === 0) {
+            alert('Please select at least one item to add.');
+            return;
+        }
+        selectedCheckboxes.forEach(checkbox => {
+            const item = checkbox.value;
+            if (!quoteItems.includes(item)) {
+                quoteItems.push(item);
+            }
+        });
+
+        // Save the updated cart to sessionStorage
+        sessionStorage.setItem('quoteCart', JSON.stringify(quoteItems));
+
+        updateQuoteCartUI();
+        populateQuoteFormFields();
+        closeModal();
+        alert('Items added to your quote!');
+    });
+    
+    function closeModal() {
+        const activeModal = document.querySelector('.modal-overlay.active');
+        if (activeModal) {
+            activeModal.classList.remove('active');
+        }
+    }
+
+    allCloseButtons.forEach(button => button.addEventListener('click', closeModal));
+    productModalOverlay.addEventListener('click', (e) => { if (e.target === productModalOverlay) closeModal(); });
+    quoteModalOverlay.addEventListener('click', (e) => { if (e.target === quoteModalOverlay) closeModal(); });
 
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
@@ -84,122 +184,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ========== NEW: GOOGLE FORM SUBMISSION LOGIC ==========
-    const quoteForm = document.getElementById('quoteForm');
-
-    if (quoteForm) {
-        quoteForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // Stop the form from submitting the old way
-
-            // PASTE YOUR GOOGLE FORM URL HERE
-            const formActionURL = 'https://docs.google.com/forms/d/e/1FAIpQLSeY0aDGg7ZczkJ1qZUaM7YsEi5yRXOBPNUTTEURCCbBxktSzw/formResponse'; 
-
-            const formData = new FormData(quoteForm);
-
-            fetch(formActionURL, {
-                method: 'POST',
-                body: formData,
-                mode: 'no-cors' // Important: This prevents a CORS error
-            })
-            .then(() => {
-                // Success!
-                document.getElementById('quoteModalOverlay').classList.remove('active'); // Close the modal
-                quoteForm.reset(); // Clear the form fields
-                alert('Thank you! Your quote request has been sent successfully.');
-            })
-            .catch(error => {
-                // Handle errors
-                console.error('Error submitting form:', error);
-                alert('Oops! Something went wrong. Please try again.');
-            });
-        });
-    }
-
-    // ========== MODAL DISPLAY LOGIC (Existing Code) ==========
-    // Select all necessary elements
-    const mainProductsContainer = document.querySelector('.main-products');
-    
-    // Product Modal Elements
-    const productModalOverlay = document.getElementById('productModalOverlay');
-    const modalTitle = document.getElementById('modal-title');
-    const modalItemsList = document.getElementById('modal-items-list');
-    const getQuoteBtn = document.getElementById('getQuoteBtn');
-
-    // Quote Modal Elements
-    const quoteModalOverlay = document.getElementById('quoteModalOverlay');
-    const quoteSelectedItems = document.getElementById('quote-selected-items');
-    const hiddenSelectedItems = document.getElementById('hidden-selected-items');
-
-    // Close buttons for both modals
-    const allCloseButtons = document.querySelectorAll('.modal-close');
-
-    // --- Function to open the Product Details Modal ---
-    if (mainProductsContainer) {
-      mainProductsContainer.addEventListener('click', (e) => {
-        const productCard = e.target.closest('.main-product');
-        if (!productCard) return;
-
-        // Get data from the clicked card's data-attributes
-        const productName = productCard.dataset.product;
-        const itemsString = productCard.dataset.items;
-        const itemsArray = itemsString.split(',');
-
-        // Populate the modal
-        modalTitle.textContent = `${productName} Varieties`;
-        modalItemsList.innerHTML = ''; // Clear previous items
-
-        itemsArray.forEach(item => {
-          const li = document.createElement('li');
-          li.innerHTML = `
-            <label>
-              <input type="checkbox" value="${item.trim()}" name="product-item">
-              ${item.trim()}
-            </label>
-          `;
-          modalItemsList.appendChild(li);
-        });
-
-        // Show the modal
-        productModalOverlay.classList.add('active');
-      });
-    }
-
-    // --- Function to handle "Get a Quote" button click ---
-    if (getQuoteBtn) {
-      getQuoteBtn.addEventListener('click', () => {
-        const selectedCheckboxes = modalItemsList.querySelectorAll('input[type="checkbox"]:checked');
-        
-        if (selectedCheckboxes.length === 0) {
-          alert('Please select at least one item to get a quote.');
-          return;
+    // Check if we need to auto-open the modal on page load
+    if (window.location.hash === '#show-quote') {
+        if (quoteItems.length > 0) {
+            populateQuoteFormFields();
+            quoteModalOverlay.classList.add('active');
+            // Optional: remove the hash from the URL so it doesn't stay there
+            history.pushState("", document.title, window.location.pathname + window.location.search);
         }
-
-        const selectedItems = Array.from(selectedCheckboxes).map(cb => cb.value);
-
-        // Populate the quote form
-        quoteSelectedItems.textContent = selectedItems.join(', ');
-        hiddenSelectedItems.value = selectedItems.join(', '); // For form submission
-
-        // Hide product modal and show quote modal
-        productModalOverlay.classList.remove('active');
-        quoteModalOverlay.classList.add('active');
-      });
     }
     
-    // --- Function to close any active modal ---
-    function closeModal() {
-      document.querySelector('.modal-overlay.active')?.classList.remove('active');
-    }
-
-    allCloseButtons.forEach(button => {
-      button.addEventListener('click', closeModal);
-    });
-
-    // Also close modal if overlay is clicked
-    if (productModalOverlay) productModalOverlay.addEventListener('click', (e) => {
-      if (e.target === productModalOverlay) closeModal();
-    });
-    if (quoteModalOverlay) quoteModalOverlay.addEventListener('click', (e) => {
-      if (e.target === quoteModalOverlay) closeModal();
-    });
+    // Populate form fields on initial load of products page too
+    populateQuoteFormFields();
 });

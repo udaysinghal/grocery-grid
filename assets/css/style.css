@@ -751,3 +751,48 @@ footer {
     border-color: #2d6a4f;
     box-shadow: 0 4px 12px rgba(45, 106, 79, 0.2);
 }
+
+/* ========== QUOTE CART STYLES ========== */
+.quote-cart-container {
+  position: relative;
+}
+
+.quote-cart-btn {
+  background-color: #e9fce9;
+  color: #1b4332;
+  border: 1px solid #2d6a4f;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.quote-cart-btn:hover {
+  background-color: #2d6a4f;
+  color: #fff;
+}
+
+.quote-cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #d00000;
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transform: scale(0); /* Hidden by default */
+  transition: transform 0.2s ease;
+}
+
+.quote-cart-count.visible {
+  transform: scale(1); /* Visible when items are in cart */
+}
