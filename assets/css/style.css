@@ -582,3 +582,172 @@ footer {
     flex: 0 0 100%; /* 1 per view */
   }
 }
+
+
+/* ========== MODAL STYLES ========== */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* MODIFIED FOR SCROLLING */
+.modal-content {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  transform: translateY(-30px);
+  transition: transform 0.3s ease;
+  max-height: 85vh; /* Prevents the modal from being taller than the screen */
+  display: flex; /* Helps organize the content inside */
+  flex-direction: column; /* Stacks title, list, and button vertically */
+}
+
+.modal-overlay.active .modal-content {
+  transform: translateY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #888;
+  cursor: pointer;
+}
+
+.modal-content h2 {
+  color: #2d6a4f;
+  margin-bottom: 15px;
+}
+
+/* MODIFIED FOR SCROLLING */
+#modal-items-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  text-align: left;
+  overflow-y: auto; /* This is the key part that adds the scrollbar */
+  padding-right: 15px; /* Adds some space for the scrollbar */
+  border-top: 1px solid #eee; /* Adds a nice visual separator */
+  border-bottom: 1px solid #eee; /* Adds a nice visual separator */
+}
+
+#modal-items-list li {
+  padding: 8px 0;
+  font-size: 1.1rem;
+}
+
+#modal-items-list input[type="checkbox"] {
+  margin-right: 12px;
+  transform: scale(1.2);
+}
+
+#modal-items-list label {
+  cursor: pointer;
+}
+
+/* Make product cards on products.html clickable */
+.main-product {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main-product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.main-product p {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* Quote form specific styles */
+.quote-form input, .quote-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.quote-form button {
+  width: 100%;
+  background-color: #2d6a4f;
+  color: white;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.quote-form button:hover {
+  background-color: #40916c;
+}
+
+.selected-items-display {
+  background-color: #f7fdf9;
+  border-left: 4px solid #2d6a4f;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.selected-items-display strong {
+    color: #1b4332;
+}
+
+/* Homepage product card link style */
+.product-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* ========== SEARCH BAR STYLES ========== */
+.search-container {
+    margin: 30px auto 40px;
+    max-width: 600px;
+}
+
+#productSearch {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#productSearch:focus {
+    outline: none;
+    border-color: #2d6a4f;
+    box-shadow: 0 4px 12px rgba(45, 106, 79, 0.2);
+}
