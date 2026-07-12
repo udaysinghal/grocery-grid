@@ -11,6 +11,18 @@
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 
 
+
+  <script>
+    // Defined early (before body/images) so onerror handlers never fire before this exists.
+    function handleLogoError(imgEl, name) {
+        imgEl.onerror = null;
+        const initials = (name || '?').split(' ').filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+        const fallback = document.createElement('div');
+        fallback.className = 'logo-fallback';
+        fallback.textContent = initials;
+        imgEl.replaceWith(fallback);
+    }
+  </script>
 </head> -->
 
 <head>
@@ -40,6 +52,18 @@
 
   <!-- Google Search Console Verification (replace with your code when you get it) -->
   <meta name="google-site-verification" content="google-site-verification=Kx3E4Na5czY-vB3kfXS-Ap9QNQKsgf5zBfV9andJDsk" />
+
+  <script>
+    // Defined early (before body/images) so onerror handlers never fire before this exists.
+    function handleLogoError(imgEl, name) {
+        imgEl.onerror = null;
+        const initials = (name || '?').split(' ').filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+        const fallback = document.createElement('div');
+        fallback.className = 'logo-fallback';
+        fallback.textContent = initials;
+        imgEl.replaceWith(fallback);
+    }
+  </script>
 </head>
 
 
@@ -61,6 +85,7 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="products.html">Products</a></li>
+        <li><a href="authorised-dealer.html">Authorised Dealer Of</a></li>
         <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
@@ -98,28 +123,28 @@
   <div class="product-grid">
     <a href="products.html" class="product-card-link">
       <div class="product-card" data-aos="zoom-in">
-        <img src="assets/images/wheat.png" alt="Wheat Varieties" />
+        <img src="assets/images/categories/flour-grain.png" alt="Wheat Varieties" />
         <h3>Wheat</h3>
         <p>Chakki Aata, Mill Aata, Besan, Maida</p>
       </div>
     </a>
     <a href="products.html" class="product-card-link">
       <div class="product-card" data-aos="zoom-in">
-        <img src="assets/images/rice.png" alt="Rice Varieties" />
+        <img src="assets/images/categories/rice.png" alt="Rice Varieties" />
         <h3>Rice</h3>
         <p>Basmati, Golden Sela, 505 Rice Golden</p>
       </div>
     </a>
     <a href="products.html" class="product-card-link">
       <div class="product-card" data-aos="zoom-in">
-        <img src="assets/images/spices.png" alt="Spices" />
+        <img src="assets/images/categories/spices-powder.png" alt="Spices" />
         <h3>Spices</h3>
         <p>Haldi, Kitchen King, Garam Masala</p>
       </div>
     </a>
     <a href="products.html" class="product-card-link">
       <div class="product-card" data-aos="zoom-in">
-        <img src="assets/images/oil.png" alt="Cooking Oil" />
+        <img src="assets/images/categories/oil.png" alt="Cooking Oil" />
         <h3>Cooking Oils</h3>
         <p>Olive Oil, Refined, Soya, Ghee</p>
       </div>
@@ -137,40 +162,64 @@
       
       <div class="carousel-track">
         <div class="client">
-          <img src="assets/images/vegorama.png" alt="Vegorama Punjabi Angithi">
+          <img src="assets/images/partners/vegorama.png" alt="Vegorama Punjabi Angithi">
           <p>Vegorama Punjabi Angithi Ltd.<br>(21+ outlets in Delhi-NCR & Uttarakhand)</p>
         </div>
         <div class="client">
-          <img src="assets/images/baozi.png" alt="Baozi Momos">
+          <img src="assets/images/partners/baozi.png" alt="Baozi Momos">
           <p>AY Team Hospitality Pvt. Ltd. – Baozi Momos<br>(30+ outlets in Delhi-NCR & Rajasthan)</p>
         </div>
         <div class="client">
-          <img src="assets/images/cocoandcurry.png" alt="Coco and Curry">
+          <img src="assets/images/partners/cocoandcurry.png" alt="Coco and Curry">
           <p>Vaibhav Lakshmi Food Styles LLP – Coco and Curry<br>(Delhi & Gurugram)</p>
         </div>
         <div class="client">
-          <img src="assets/images/wongskitchen.png" alt="Wongs Kitchen">
+          <img src="assets/images/partners/wongskitchen.png" alt="Wongs Kitchen">
           <p>Wongs Kitchen</p>
         </div>
         <div class="client">
-          <img src="assets/images/gamesofmomos.png" alt="Games of Momos">
+          <img src="assets/images/partners/gamesofmomos.png" alt="Games of Momos">
           <p>Games of Momos</p>
         </div>
         <div class="client">
-          <img src="assets/images/wahbhaiwah.png" alt="Wah Bhai Wah">
+          <img src="assets/images/partners/wahbhaiwah.png" alt="Wah Bhai Wah">
           <p>Wah Bhai Wah</p>
         </div>
         <div class="client">
-          <img src="assets/images/palmgreen.png" alt="Palm Green Hotels">
+          <img src="assets/images/partners/palmgreen.png" alt="Palm Green Hotels">
           <p>Palm Green Hotels & Resorts</p>
         </div>
         <div class="client">
-          <img src="assets/images/wahjiwah.png" alt="Wah Ji Wah">
+          <img src="assets/images/partners/wahjiwah.png" alt="Wah Ji Wah">
           <p>Wah Ji Wah</p>
         </div>
         <div class="client">
-          <img src="assets/images/sgf.png" alt="SGF">
+          <img src="assets/images/partners/sgf.png" alt="SGF">
           <p>SGF – Spice Grill Flame</p>
+        </div>
+        <div class="client">
+          <img src="assets/images/partners/apni-rasoi.png" alt="Apni Rasoi" onerror="handleLogoError(this, 'Apni Rasoi')">
+          <p>Apni Rasoi<br>(All Branches)</p>
+        </div>
+        <div class="client">
+          <img src="assets/images/partners/khadak-singh.png" alt="Khadak Singh" onerror="handleLogoError(this, 'Khadak Singh')">
+          <p>Khadak Singh<br>(Delhi Branches)</p>
+        </div>
+        <div class="client">
+          <img src="assets/images/partners/bbq-company.png" alt="Barbeque Company" onerror="handleLogoError(this, 'Barbeque Company')">
+          <p>Barbeque Company (BBQ)<br>(Delhi & NCR)</p>
+        </div>
+        <div class="client">
+          <img src="assets/images/partners/cheers-restro-bar.png" alt="Cheers Restro & Bar" onerror="handleLogoError(this, 'Cheers Restro Bar')">
+          <p>Cheers Restro & Bar<br>(Prashant Vihar)</p>
+        </div>
+        <div class="client">
+          <img src="assets/images/partners/metro-grill-bar.png" alt="Metro Grill & Bar" onerror="handleLogoError(this, 'Metro Grill Bar')">
+          <p>Metro Grill & Bar<br>(Sector-10)</p>
+        </div>
+        <div class="client">
+          <img src="assets/images/partners/punjab-aura.png" alt="Punjab Aura" onerror="handleLogoError(this, 'Punjab Aura')">
+          <p>Punjab Aura<br>(Patel Nagar)</p>
         </div>
       </div>
 

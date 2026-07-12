@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Authorised Dealer Of | Grocery Grid</title>
+  <meta name="description" content="Grocery Grid is an authorised dealer for MDH Spices, Funtop Sauces, Everplus Sauces & Beverages, Delhi Flour Mills, Mangat Ram Pulses, and Holyland Marketing & Golden Crown.">
+  <link rel="canonical" href="https://grocerygrid.in/authorised-dealer.html">
+
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/css/style.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <!-- Google Search Console Verification -->
+  <meta name="google-site-verification" content="google-site-verification=Kx3E4Na5czY-vB3kfXS-Ap9QNQKsgf5zBfV9andJDsk" />
+
+  <script>
+    // Defined early (before body/images) so onerror handlers never fire before this exists.
+    function handleLogoError(imgEl, name) {
+        imgEl.onerror = null;
+        const initials = (name || '?').split(' ').filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+        const fallback = document.createElement('div');
+        fallback.className = 'logo-fallback';
+        fallback.textContent = initials;
+        imgEl.replaceWith(fallback);
+    }
+  </script>
+</head>
+
+<body>
+  <!-- Navbar -->
+    <header class="navbar">
+    <a href="index.html" class="logo">GroceryGrid</a>
+
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav>
+        <ul id="nav-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="authorised-dealer.html">Authorised Dealer Of</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="quote-cart-container">
+      <button class="quote-cart-btn" id="quoteCartBtn">
+          🛒 My Quote
+          <span class="quote-cart-count" id="quoteCartCount">0</span>
+      </button>
+    </div>
+    </header>
+
+  <!-- Authorised Dealer Section -->
+  <section class="dealer-section">
+    <h1 data-aos="fade-up">Authorised Dealer Of</h1>
+    <p class="subtitle" data-aos="fade-up" data-aos-delay="100">Grocery Grid is proud to be an authorised dealer for these trusted brands.</p>
+
+    <div class="dealer-grid" id="dealerGrid" data-aos="fade-up" data-aos-delay="150">
+      <!-- Dealer cards render dynamically from assets/js/products-data.js -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <p>📍 Delhi NCR | 📞 +91-9871071998 | ✉️ contact@grocerygrid.in</p>
+      <p class="app-note">Mobile App coming soon 🚀</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/products-data.js"></script>
+  <script src="assets/js/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('dealerGrid');
+      if (!grid || typeof authorisedDealers === 'undefined') return;
+      authorisedDealers.forEach(dealer => {
+        const card = document.createElement('div');
+        card.className = 'dealer-card';
+        card.innerHTML = `
+          <img src="assets/images/dealers/${dealer.id}.png" alt="${dealer.name}"
+               onerror="handleLogoError(this, '${dealer.name.replace(/'/g, "\\'")}')">
+          <h3>${dealer.name}</h3>
+        `;
+        grid.appendChild(card);
+      });
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>AOS.init({ duration: 1000, once: true });</script>
+</body>
+</html>

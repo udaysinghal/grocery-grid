@@ -796,3 +796,268 @@ footer {
 .quote-cart-count.visible {
   transform: scale(1); /* Visible when items are in cart */
 }
+
+/* ========== PRODUCTS: DYNAMIC CATEGORY CARDS ========== */
+.main-product.coming-soon {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.main-product.coming-soon:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.category-icon {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 12px;
+}
+
+.category-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.category-icon-fallback {
+  font-size: 2.4rem;
+  line-height: 100px;
+  height: 100px;
+  margin: 0 auto 12px;
+  text-align: center;
+}
+
+/* ========== MODAL: clickable breadcrumb ========== */
+.breadcrumb-link {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  text-decoration-color: currentColor;
+}
+
+.breadcrumb-sep {
+  color: #999;
+  font-weight: 400;
+}
+
+/* ========== SEARCH AUTOCOMPLETE (main products page search) ========== */
+.search-container {
+  position: relative;
+  /* z-index here (not just on the dropdown) forces this whole block into its
+     own stacking context, so it always paints above the category cards below
+     it — even though AOS applies a transform to those cards that would
+     otherwise let them win against a dropdown z-index set on its own. */
+  z-index: 100;
+}
+
+.autocomplete-box {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e2e2e2;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  max-height: 340px;
+  overflow-y: auto;
+  z-index: 100;
+  text-align: left;
+}
+
+.autocomplete-box.active {
+  display: block;
+}
+
+.autocomplete-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f1f1;
+  transition: background-color 0.15s ease;
+}
+
+.autocomplete-row:last-child {
+  border-bottom: none;
+}
+
+.autocomplete-row:hover {
+  background-color: #f1fdf3;
+}
+
+.autocomplete-item-name {
+  font-weight: 600;
+  color: #1e1e1e;
+}
+
+.autocomplete-breadcrumb {
+  font-size: 0.8rem;
+  color: #2d6a4f;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.autocomplete-empty {
+  padding: 14px 18px;
+  color: #777;
+  font-size: 0.95rem;
+}
+
+/* ========== MODAL: back button + in-modal search ========== */
+.modal-back {
+  display: none;
+  background: none;
+  border: none;
+  color: #2d6a4f;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 0 0 10px 0;
+  align-self: flex-start;
+}
+
+.modal-search-container {
+  margin-bottom: 10px;
+}
+
+.modal-search-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+}
+
+.modal-search-input:focus {
+  outline: none;
+  border-color: #2d6a4f;
+}
+
+/* Subcategory list (level 1, shown for categories like Rice) */
+.modal-subcat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.subcat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 4px;
+  border-bottom: 1px solid #f1f1f1;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.15s ease;
+}
+
+.subcat-item:last-child {
+  border-bottom: none;
+}
+
+.subcat-item:hover {
+  background-color: #f7fdf9;
+}
+
+.subcat-count {
+  font-size: 0.85rem;
+  color: #2d6a4f;
+  font-weight: 400;
+}
+
+.no-results {
+  padding: 20px 4px;
+  color: #888;
+  text-align: center;
+  list-style: none;
+}
+
+/* Highlighted item when arriving from the main search autocomplete */
+.highlight-item {
+  background-color: #d8f3dc;
+  border-radius: 8px;
+  padding: 4px 8px;
+  display: block;
+}
+
+/* ========== LOGO FALLBACK (shown when a brand/partner image isn't uploaded yet) ========== */
+.logo-fallback {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: #2d6a4f;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin: 0 auto 8px;
+}
+
+.dealer-card .logo-fallback,
+.dealer-card img {
+  width: 110px;
+  height: 110px;
+}
+
+/* ========== AUTHORISED DEALER PAGE ========== */
+.dealer-section {
+  padding: 60px 10%;
+  background-color: #f9fff9;
+  text-align: center;
+}
+
+.dealer-section h1 {
+  font-size: 2.4rem;
+  color: #2d6a4f;
+  margin-bottom: 10px;
+}
+
+.dealer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-top: 40px;
+}
+
+.dealer-card {
+  background-color: #ffffff;
+  padding: 30px 20px;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dealer-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+}
+
+.dealer-card img {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin: 0 auto 14px;
+  display: block;
+}
+
+.dealer-card h3 {
+  color: #1b4332;
+  font-size: 1.05rem;
+}
